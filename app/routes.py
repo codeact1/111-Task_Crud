@@ -20,19 +20,17 @@ def create_task():
     return out, 201
 
 
-@app.put("/tasks")
-def update_task():
-    out = {"status": "ok"}
-    task_data = request.json
-    task.update(task_data)
-    return out, 201
+@app.put("/tasks/<int:pk>")
+def update_task(pk):
 
-@app.delete("/tasks")
-def delete_task():
-    out = {"status": "ok"}
     task_data = request.json
-    task.delete(task_data)
-    return out, 201
+    task.update(pk, task_data)
+    return 204
+
+@app.delete("/tasks/<int:pk>")
+def delete_task(pk):
+    task.delete(pk)
+    return 204
 
 
 

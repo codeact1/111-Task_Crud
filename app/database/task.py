@@ -45,17 +45,17 @@ def insert(raw_data):
     conn.commit()
     conn.close()
 
-def update(raw_data):
+def update(pk, raw_data):
     task_data = (
         raw_data.get("title"),
         raw_data.get("subtitle"),
         raw_data.get("body"),
-        raw_data.get("id")
+        pk
     )
 
     statement = """
-        UPDATE task SET
-            title = ?,
+        UPDATE task 
+        SET title = ?,
             subtitle = ?,
             body = ?
         WHERE id = ?
@@ -67,13 +67,7 @@ def update(raw_data):
     conn.close()
 
 def delete(pk):
-    statement = """
-        UPDATE task SET
-            active = 0
-        WHERE id = ?
-
-    """
     conn = get_db()
-    conn = conn.execute(statement, (pk,))
+    conn.execute("Delete task FROM WHERE id=?" (pk,))
     conn.commit()
     conn.close()    

@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = "http://127.0.0.1:5000/tasks"
+BASE_URL = "http://127.0.0.1:5000/tasks/"
 
 def update_task(pk, title, subtitle, body):
     task_dictionary = {
@@ -8,7 +8,7 @@ def update_task(pk, title, subtitle, body):
         "subtitle": subtitle,
         "body": body
     }
-    url ="%s/%s" % (BASE_URL, pk)
+    url ="%s%s" % (BASE_URL, pk)
     response = requests.put(url, json=task_dictionary)
     if response.status_code == 204:
         print("Update successful.")
