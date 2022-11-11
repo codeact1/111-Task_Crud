@@ -3,13 +3,13 @@ from app.database import get_db
 
 def output_formatter(results):
     out = []
-    for results in results:
+    for result in results:
         result_dict = {
-            "id": results[0],
-            "title": [1],
-            "subtitle":[2],
-            "body": [3],
-            "active": [4]
+            "id": result[0],
+            "title": result[1],
+            "subtitle": result[2],
+            "body": result[3],
+            "active": result[4]
 
         }
         out.append(result_dict)
@@ -23,7 +23,57 @@ def scan ():
     cursor.close()
     return output_formatter(results)
 
+def insert(raw_data):
+    task_data = (
+        raw_data.get("title"),
+        raw_data.get("subtitle"),
+        raw_data.get("body")
+    )
 
+    statement = """
+        INSERT INTO task (
+            title,
+            subtitle,
+            body
+        ) VALUES (
+            ?, ?, ?    
+        )
 
+    """
+    conn = get_db()
+    conn.execute(statement, task_data)
+    conn.commit()
+    conn.close()
 
+def update(raw_data):
+    task_data = (
+        raw_data.get("title"),
+        raw_data.get("subtitle"),
+        raw_data.get("body"),
+        raw_data.get("id")
+    )
 
+    statement = """
+        UPDATE task SET
+            title = ?,
+            subtitle = ?,
+            body = ?
+        WHERE id = ?
+
+    """
+    conn = get_db()
+    conn = conn.execute(statement, task_data)
+    conn.commit()
+    conn.close()
+
+def delete(pk):
+    statement = """
+        UPDATE task SET
+            active = 0
+        WHERE id = ?
+
+    """
+    conn = get_db()
+    conn = conn.execute(statement, (pk,))
+    conn.commit()
+    conn.close()    
