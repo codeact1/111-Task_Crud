@@ -15,6 +15,15 @@ def output_formatter(results):
         out.append(result_dict)
     return out
 
+def  select_by_id(pk):
+    conn =get_db()
+    cursor = conn.execute(
+    "SELECT * from task WHERE id=?",
+    (pk) 
+)
+    results = cursor.fetchall()
+    conn.close()
+    return output_formatter(results)
 
 def scan ():
     conn = get_db()
