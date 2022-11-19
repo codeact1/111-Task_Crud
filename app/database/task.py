@@ -15,14 +15,11 @@ def output_formatter(results):
         out.append(result_dict)
     return out
 
-def  select_by_id(pk):
+def select_by_id(pk):
     conn =get_db()
-    cursor = conn.execute(
-    "SELECT * from task WHERE id=?",
-    (pk) 
-)
+    cursor = conn.execute("SELECT * from task WHERE id=?", (pk,))
     results = cursor.fetchall()
-    conn.close()
+    cursor.close()
     return output_formatter(results)
 
 def scan ():
@@ -71,12 +68,12 @@ def update(pk, raw_data):
 
     """
     conn = get_db()
-    conn = conn.execute(statement, task_data)
+    conn.execute(statement, task_data)
     conn.commit()
     conn.close()
 
 def delete(pk):
     conn = get_db()
-    conn.execute("Delete task FROM WHERE id=?" (pk,))
+    conn.execute("DELETE FROM task WHERE id=?", (pk,))
     conn.commit()
     conn.close()    

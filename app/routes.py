@@ -14,8 +14,8 @@ def get_all_tasks():
 @app.get("/tasks/<int:pk>")
 def get_one_task(pk):
     out ={}
-    response =task.scan()
-    out["tasks"] = response[0]
+    response =task.select_by_id(pk)
+    out["task"] = response[0]
     return out
 
 @app.post("/tasks")
@@ -36,7 +36,7 @@ def update_task(pk):
 @app.delete("/tasks/<int:pk>")
 def delete_task(pk):
     task.delete(pk)
-    return 204
+    return "", 204
 
 
 
